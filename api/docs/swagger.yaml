@@ -1,0 +1,902 @@
+basePath: /v1
+definitions:
+  models.AllNewsProducts:
+    properties:
+      news_products:
+        items:
+          $ref: '#/definitions/models.NewsProductRes'
+        type: array
+    type: object
+  models.AllProducts:
+    properties:
+      products:
+        items:
+          $ref: '#/definitions/models.ProductRes'
+        type: array
+    type: object
+  models.CategoryReq:
+    properties:
+      category_name:
+        type: string
+    type: object
+  models.CategoryUpdateReq:
+    properties:
+      category_name:
+        type: string
+      id:
+        type: integer
+    type: object
+  models.FailureInfo:
+    properties:
+      code:
+        type: integer
+      error: {}
+      message:
+        type: string
+    type: object
+  models.NewsProductReq:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      media_link:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+    type: object
+  models.NewsProductRes:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      media_link:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.ProductReq:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      media_link:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+    type: object
+  models.ProductRes:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      media_link:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.SuccessInfo:
+    properties:
+      message:
+        type: string
+      status_code:
+        type: integer
+    type: object
+  models.UpdateNewsProductReq:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      media_link:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+    type: object
+  models.UpdateProductReq:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      media_link:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+    type: object
+  models.UpdateUserReq:
+    properties:
+      id:
+        example: uuid
+        type: string
+      phone_number:
+        type: string
+    type: object
+  models.UserReq:
+    properties:
+      phone_number:
+        example: (998)
+        type: string
+    type: object
+  models.UserRes:
+    properties:
+      created_at:
+        example: Mon, 15 Jan 2023 07:41:56 UTC
+        type: string
+      id:
+        example: 98fe8389-8d29-4e4c-838e-782818e6b966
+        type: string
+      phone_number:
+        example: (998)91 900-89-99
+        type: string
+      updated_at:
+        example: Mon, 15 Jan 2023 07:41:56 UTC
+        type: string
+    type: object
+  repo.CategoryResponse:
+    properties:
+      catergoryName:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  repo.Empty:
+    type: object
+  repo.NewsProductResponse:
+    properties:
+      categoryId:
+        type: integer
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      mediaLink:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  repo.ProductResponse:
+    properties:
+      categoryId:
+        type: integer
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      mediaLink:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:7070
+info:
+  contact:
+    email: gofurovmurtazoxon@gmail.com
+    name: Murtazoxon
+    url: https://t.me/murtazokhon_gofurov
+  description: This is climate_uz server api server
+  termsOfService: 2 term climate_uz
+  title: Climate_uz api
+  version: "1.0"
+paths:
+  /admin/{username}/{password}:
+    get:
+      consumes:
+      - application/json
+      description: this method admin login
+      parameters:
+      - description: username
+        in: path
+        name: username
+        required: true
+        type: string
+      - description: password
+        in: path
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.SuccessInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: Login admin
+      tags:
+      - Admin
+  /allnews:
+    get:
+      consumes:
+      - application/json
+      description: This method get all news product infos
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: search
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AllNewsProducts'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: get all news products
+      tags:
+      - News
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: this method renames the category with id
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: search
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: Update  category
+      tags:
+      - Category
+  /category:
+    patch:
+      consumes:
+      - application/json
+      description: this method renames the category with id
+      parameters:
+      - description: UpdateCategoryReq
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/models.CategoryUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: Update  category
+      tags:
+      - Category
+    post:
+      consumes:
+      - application/json
+      description: this method create new category
+      parameters:
+      - description: CategoryRequest
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/models.CategoryReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: Create new categorys
+      tags:
+      - Category
+  /category/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This function is for deleting categories by Id
+      parameters:
+      - description: categoryId
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.Empty'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: Delete  category
+      tags:
+      - Category
+    get:
+      consumes:
+      - application/json
+      description: this method get category by id
+      parameters:
+      - description: category id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: Get  category
+      tags:
+      - Category
+  /news:
+    patch:
+      consumes:
+      - application/json
+      description: "this \tmethod update news product"
+      parameters:
+      - description: UpdateRequest
+        in: body
+        name: news
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateNewsProductReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.NewsProductRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: "update \tnews product"
+      tags:
+      - News
+    post:
+      consumes:
+      - application/json
+      description: This method add news products
+      parameters:
+      - description: NewsProductRequest
+        in: body
+        name: news
+        required: true
+        schema:
+          $ref: '#/definitions/models.NewsProductReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/repo.NewsProductResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: Add news product
+      tags:
+      - News
+  /news/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: "this \tmethod delete news product by id"
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessInfo'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: delete news product info
+      tags:
+      - News
+    get:
+      consumes:
+      - application/json
+      description: This method get news product info by id
+      parameters:
+      - description: newsproductID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.NewsProductResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: get news products
+      tags:
+      - News
+  /news/category/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: "this \tmethod delete news product"
+      parameters:
+      - description: category id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessInfo'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: "delete \tnews product"
+      tags:
+      - News
+  /news/incategory/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This method get all news products by category id
+      parameters:
+      - description: categoryId
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AllNewsProducts'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: get all news products in category
+      tags:
+      - News
+  /product:
+    patch:
+      consumes:
+      - application/json
+      description: this method edit product info
+      parameters:
+      - description: UpdateProductRequest
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateProductReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.ProductResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: edit product info
+      tags:
+      - Product
+    post:
+      consumes:
+      - application/json
+      description: this method create new product
+      parameters:
+      - description: ProductRequest
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/repo.ProductResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: create new product
+      tags:
+      - Product
+  /product/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: this method delete product info by productId
+      parameters:
+      - description: product_id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.Empty'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: delete product info
+      tags:
+      - Product
+    get:
+      consumes:
+      - application/json
+      description: this method get product by Id
+      parameters:
+      - description: product_id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.ProductResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: get one product
+      tags:
+      - Product
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: this method get all products list
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: search
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AllProducts'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: get all products
+      tags:
+      - Product
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: this method delete products info by categoryId
+      parameters:
+      - description: category_id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.Empty'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: delete products info by categoryId
+      tags:
+      - Product
+  /user:
+    patch:
+      consumes:
+      - application/json
+      description: This method update user info
+      parameters:
+      - description: UpdateUserReq
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: Update user info
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: This function create new user
+      parameters:
+      - description: UserRequest
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: add user phone_number
+      tags:
+      - User
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This method delete user info
+      parameters:
+      - description: user_id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessInfo'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: Delete user info
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      description: This function get user by id
+      parameters:
+      - description: user_id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      security:
+      - BearerAuth: []
+      summary: Get user
+      tags:
+      - User
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: This method is to get all users
+      parameters:
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: string
+      - description: search
+        in: query
+        name: search
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.FailureInfo'
+      summary: Get all users
+      tags:
+      - User
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
