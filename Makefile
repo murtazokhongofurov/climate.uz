@@ -7,7 +7,7 @@ POSTGRES_DATABASE=climatedb
 DB_URL="postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DATABASE)?sslmode=disable"
 
 migrate_file:
-	migrate create -ext sql -dir migrations -seq create_social_medias_table
+	migrate create -ext sql -dir migrations -seq create_comments_table
 
 run:
 	go run cmd/main.go
@@ -21,7 +21,7 @@ local-up:
 	docker compose --env-file ./.env.docker up -d
 
 migrate_forse:
-	migrate -path migrations -database "$(DB_URL)" -verbose forse
+	migrate -path migrations -database "$(DB_URL)" -verbose forse 4
 
 swag:
 	swag init -g api/router.go -o api/docs

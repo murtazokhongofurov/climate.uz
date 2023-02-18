@@ -8,6 +8,7 @@ import (
 
 type StorageI interface {
 	Admin() repo.AdminStorageI
+	Brand() repo.BrandStorageI
 	Category() repo.CategoryStorageI
 	Product() repo.ProductStorageI
 	NewProduct() repo.NewsStorageI
@@ -16,6 +17,7 @@ type StorageI interface {
 
 type StoragePg struct {
 	Adminrepo       repo.AdminStorageI
+	Brandrepo       repo.BrandStorageI
 	Categoryrepo    repo.CategoryStorageI
 	Productrepo     repo.ProductStorageI
 	Userrepo        repo.UserStorageI
@@ -25,6 +27,7 @@ type StoragePg struct {
 func NewStoragePg(db *db.Postgres) StorageI {
 	return &StoragePg{
 		Adminrepo:       postgres.NewAdmin(db),
+		Brandrepo:       postgres.NewBrand(db),
 		Categoryrepo:    postgres.NewCategory(db),
 		Productrepo:     postgres.NewProduct(db),
 		NewsProductrepo: postgres.NewNewsProduct(db),
@@ -36,6 +39,9 @@ func (a *StoragePg) Admin() repo.AdminStorageI {
 	return a.Adminrepo
 }
 
+func (b *StoragePg) Brand() repo.BrandStorageI {
+	return b.Brandrepo
+}
 func (s *StoragePg) Category() repo.CategoryStorageI {
 	return s.Categoryrepo
 }

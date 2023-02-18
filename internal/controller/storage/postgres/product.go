@@ -52,7 +52,6 @@ func (p *ProductRepo) CreateProduct(product *repo.ProductRequest) (*repo.Product
 	res.CreatedAt = create.Format(time.RFC1123)
 	res.UpdatedAt = update.Format(time.RFC1123)
 	if err != nil {
-		fmt.Println("error >> ", err)
 		return &repo.ProductResponse{}, err
 	}
 	return &res, nil

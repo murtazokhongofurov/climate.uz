@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"database/sql"
+
 	"gitlab.com/climate.uz/internal/controller/storage/repo"
 	"gitlab.com/climate.uz/pkg/db"
 )

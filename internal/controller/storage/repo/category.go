@@ -1,7 +1,5 @@
 package repo
 
-import "time"
-
 type CategoryRequest struct {
 	CategoryName string
 }
@@ -9,8 +7,8 @@ type CategoryRequest struct {
 type CategoryResponse struct {
 	Id            int
 	CatergoryName string
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
+	CreatedAt     string
+	UpdatedAt     string
 }
 
 type CategoryId struct {

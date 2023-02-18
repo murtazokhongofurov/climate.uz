@@ -26,7 +26,7 @@ func (u *UserRepo) CreateUser(user *repo.UserRequest) (*repo.UserResponse, error
 		res            = repo.UserResponse{}
 	)
 	query := `INSERT INTO 
-		users(id, phone_number) VALUES($1,$2) 
+		users(phone_number) VALUES($2) 
 		RETURNING id, phone_number, created_at, updated_at`
 
 	err := u.db.Pool.QueryRow(context.Background(), query,
